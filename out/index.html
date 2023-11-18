@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WASM Tic-Tac-Toe</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+</head>
+<body>
+    <h1>TicTacToe</h1>
+    <script src="wasm_exec.js"></script>
+    <script src="script.js"></script>
+
+        <!-- Assume you have a simple HTML structure for your Tic-Tac-Toe board -->
+    <div id="board">
+        <!-- Squares are represented by buttons -->
+        <button id="card1" type="button" class="btn btn-dark" onclick="makeMove(0)">-</button>
+        <button id="card2" type="button" class="btn btn-dark" onclick="makeMove(1)">-</button>
+        <button id="card3" type="button" class="btn btn-dark" onclick="makeMove(2)">-</button>
+        <br>
+        <button id="card4" type="button" class="btn btn-dark" onclick="makeMove(3)">-</button>
+        <button id="card5" type="button" class="btn btn-dark" onclick="makeMove(4)">-</button>
+        <button id="card6" type="button" class="btn btn-dark" onclick="makeMove(5)">-</button>
+        <br>
+        <button id="card7" type="button" class="btn btn-dark" onclick="makeMove(6)">-</button>
+        <button id="card8" type="button" class="btn btn-dark" onclick="makeMove(7)">-</button>
+        <button id="card9" type="button" class="btn btn-dark" onclick="makeMove(8)">-</button>
+        <br>
+        <br>
+        <h1 id="winner"></p>
+
+        <!-- ... other squares ... -->
+    </div>
+
+    <script>
+
+        var turn = 1;
+        // Function to call the Go function with the square ID
+        function makeMove(id) {
+            let result = MakeMoveJs(id); // MakeMoveJs is the Go function exposed to JS
+            console.log(result);
+
+            if (result.error) {
+                alert("Error: " + result.error);
+                return;
+            } 
+
+            // Update the board on the web page
+            let char;
+            elementId = "card"+(id+1);
+            if (turn == 1) {
+                char = "X"
+            } else {
+                char = "O"
+            }
+            document.getElementById(elementId).innerText = char;
+            turn*=-1;
+
+            if (result.gameOver) {
+                document.getElementById("winner").innerText = "Winner: "+char;
+            }
+
+
+        }
+    </script>
+</body>
+</html>
